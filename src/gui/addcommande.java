@@ -87,7 +87,7 @@ public class addcommande extends BaseForm {
         add(nom);
         TextComponent prenom= new TextComponent().label("prenom :");
         add(prenom);
-        TextComponent adresse= new TextComponent().label("adresse :");
+        TextComponent adresse= new TextComponent().label("email :");
         add(adresse);
         
 
@@ -117,7 +117,7 @@ public class addcommande extends BaseForm {
             
 
                   
-            if(ServiceCommande.getInstance().addcommande(1,nom.getText(),prenom.getText(),adresse.getText())==false){
+            if(ServiceCommande.getInstance().addcommande(41,nom.getText(),prenom.getText(),adresse.getText())==false){
                Dialog.show("Ereur","Ereur",new Command("OK"));
                     }else {
                 Dialog.show("Success","Commande Ajouter avec success",new Command("OK"));

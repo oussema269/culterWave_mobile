@@ -38,11 +38,11 @@ public class addpanier extends BaseForm {
 
 
     public addpanier(Resources res) {
-        super("Ajouter Reclamation", BoxLayout.y());
+        super("Ajouter Produit", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Ajouter Reclamation");
+        setTitle("Ajouter produit");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -74,7 +74,7 @@ public class addpanier extends BaseForm {
 
 
                         
-//        TextComponent nom= new TextComponent().label("Nom Reclamation:");
+//        TextComponent nom= new TextComponent().label("Nom Panier:");
 //        add(nom);
                               
         
@@ -114,7 +114,7 @@ public class addpanier extends BaseForm {
             if(ServicePanier.getInstance().addpanier(fi,Integer.parseInt(idprod.getText()))==false){
                Dialog.show("Ereur","Ereur",new Command("OK"));
                     }else {
-                Dialog.show("Success","Reclamation Ajouter avec success",new Command("OK"));
+                Dialog.show("Success","produit Ajouter avec success",new Command("OK"));
                             new afficherpanier(res).show();
 
                     }

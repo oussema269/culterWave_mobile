@@ -52,6 +52,7 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.io.NetworkEvent;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComboBox;
+import com.codename1.ui.Font;
 import com.codename1.ui.Slider;
 import com.codename1.ui.layouts.FlowLayout;
 
@@ -65,11 +66,11 @@ public class afficherpanier extends BaseForm{
 
     public afficherpanier(Resources res) {
         
-        super("Reclamations", BoxLayout.y());
+        super("panier", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Reclamations");
+        setTitle("panier");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -78,7 +79,7 @@ public class afficherpanier extends BaseForm{
         Tabs swipe = new Tabs();
 
         Label spacer1 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "  ", "", " ");
+        addTab(swipe, res.getImage("timeline-background.jpg"), spacer1, "  ", "", " ");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -119,15 +120,15 @@ public class afficherpanier extends BaseForm{
         add(LayeredLayout.encloseIn(swipe, radioContainer));
                                             
         
-        
         ButtonGroup barGroup = new ButtonGroup();
                   Container co=new Container(BoxLayout.xCenter());
                    // ArrayList <panier> panier = new ArrayList();
                    
-                   panier panier = ServicePanier.getInstance().getAllReclamations(41);
+                   panier panier = ServicePanier.getInstance().getAllPanier(41);
                    ArrayList<produit> prod=panier.getProducts();
-                   float total=ServicePanier.getInstance().gettotal(41);
-                   
+                   float total=ServicePanier.getInstance().gettotal(41);                                                                                               
+                    int count =ServicePanier.getInstance().getAllPanier(41).getCount();
+
                           
   Button commande = new Button("commander");
   commande.addActionListener(new ActionListener() {
@@ -189,11 +190,11 @@ public class afficherpanier extends BaseForm{
                           Supprimer.addActionListener(new ActionListener() {
                                             @Override
             public void actionPerformed(ActionEvent evt) {               
-                if (Dialog.show("Confirmation", "Voulez vous supprimer cett exercice ?", "Oui", "Annuler")) {
+                if (Dialog.show("Confirmation", "Voulez vous supprimer cett produit ?", "Oui", "Annuler")) {
 
-               ServicePanier.getInstance().deletepanier(panier.getId_panier());
+               ServicePanier.getInstance().deletepanier(panier.getId_user(),fi.getId_produit());
             // Success message
-            Dialog.show("Success", "Reclamation deleted successfully", "OK", null);
+            Dialog.show("Success", "produit deleted successfully", "OK", null);
              new afficherpanier(res).show();
 
 
@@ -214,6 +215,36 @@ public class afficherpanier extends BaseForm{
 tot.getAllStyles().setFgColor(0x00FF00); // set the foreground color to green
 tot.getAllStyles().setAlignment(Component.BOTTOM | Component.RIGHT); // align the label to the bottom right
 add(tot);
+/*Label count1 = new Label("panier" + count);
+count1.getAllStyles().setFgColor(0x00FF00); // set the foreground color to green
+count1.getAllStyles().setAlignment(Component.BOTTOM | Component.LEFT); // align the label to the bottom right
+add(count1);
+*/
+// Create an icon for the cart
+FontImage cartIcon = FontImage.createMaterial(FontImage.MATERIAL_SHOPPING_CART, "Cart", 4.0f);
+
+// Create a label to display the cart count
+Label cartCountLabel = new Label(Integer.toString(count));
+cartCountLabel.getAllStyles().setFgColor(0xFFFFFF); // set the foreground color to white
+cartCountLabel.getAllStyles().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_MEDIUM)); // set the font style
+cartCountLabel.getAllStyles().setPadding(2, 2, 2, 2); // add some padding
+cartCountLabel.getAllStyles().setBgTransparency(255); // make the background fully opaque
+cartCountLabel.getAllStyles().setBgColor(0xFF0000); // set the background color to red
+cartCountLabel.getAllStyles().setAlignment(Component.CENTER); // center the text inside the label
+
+// Wrap the cart count label in a container to position it over the cart icon
+Container cartCountContainer = BorderLayout.center(cartCountLabel);
+cartCountContainer.setUIID("CartCount"); // give the container a custom UIID to style it separately
+
+// Add the cart icon and count container to a toolbar
+Toolbar myToolbar = new Toolbar();
+
+
+
+// Add the toolbar to the form
+Form myForm = new Form("My Form");
+myForm.setToolbar(myToolbar);
+myForm.show();
 
                   
     }

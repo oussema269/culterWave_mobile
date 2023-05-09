@@ -32,7 +32,15 @@ public class commande {
     public void setStatus(String status) {
         this.status = status;
     }
-   
+   public  commande(int id_commande,int id_user, String nom, String prenom, float total_commande){
+    this.id_commande=id_commande;
+        this.cl = new utilisateur();
+        this.cl.setId_user(id_user);
+        this.cl.setNom(nom);
+        this.cl.setPrenom(prenom);
+        this.total_commande=total_commande;
+
+}
     
 
      public commande() {

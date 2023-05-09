@@ -16,7 +16,15 @@ public class panier {
    
     private int id_user;
      private int id_panier;
+int count;
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
     
  private ArrayList<produit> products;
     private double total_panier;

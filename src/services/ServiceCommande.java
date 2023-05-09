@@ -27,7 +27,7 @@ import models.*;
  * @author rassa
  */
 public class ServiceCommande {
-    
+            commande com;
     public  ArrayList<panier> paniers =new ArrayList();
     panier pan;
     int quantitee;
@@ -50,12 +50,12 @@ public class ServiceCommande {
     
     
     
-    public boolean addcommande( int iduser , String nom,String prenom,String adresse) {
+    public boolean addcommande( int iduser , String nom,String prenom,String email) {
 
       //String description=t.getDescription();
         
        
-         String url =DB.BASE_URL+"/addcommande?iduser="+iduser+"&nom="+nom+"&prenom="+prenom+"&adresse="+adresse;
+         String url =DB.BASE_URL+"/addcommande?iduser="+iduser+"&nom="+nom+"&prenom="+prenom+"&email="+email;
 
         req.setUrl(url);
         req.setPost(false);
@@ -70,6 +70,73 @@ public class ServiceCommande {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
+    
+    
+       public commande parseCommande(String jsonText) {
+         float totale=0;
+         commande c = null ;
+                      ArrayList<commande> command = new ArrayList<commande>();
+
+        System.out.println("+++++++++++");
+        System.out.println(jsonText);
+        System.out.println("++++++++++++");
+        try {
+            JSONParser j = new JSONParser();
+            Map<String, Object> PanierListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) PanierListJson.get("root");
+            for (Map<String, Object> obj : list) {
+                
+               float id = Float.parseFloat(obj.get("idcommande").toString());        
+               float iduser=Float.parseFloat(obj.get("iduser").toString());
+                String nom = obj.get("nom").toString();
+                  String prenom = obj.get("prenom").toString();
+                 float total=Float.parseFloat(obj.get("total").toString());
+                 
+                 
+                  c=new commande((int)id, (int)iduser ,nom, prenom,total);
+                 
+            }
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+      //  t.setTotal_panier(totale);
+        //paniers.add(t);
+        return c;
+    }
+       
+       
+    
+    
+     public commande getAllCommand(int id){
+//          String url = Statics.BASE_URL+"/mobile/listReclamtion/";
+          String url =DB.BASE_URL+"/affcommande?id="+id;
+          req.setUrl(url);
+          req.setPost(false);
+          req.addRequestHeader("accept", "application/json");
+          req.addResponseListener(new ActionListener<NetworkEvent>() {
+    @Override
+    public void actionPerformed(NetworkEvent evt) {
+
+        byte[] responseData = req.getResponseData();
+        if (responseData != null) {
+             com = parseCommande(new String(responseData));
+            req.removeResponseListener(this);
+//            String response = new String(responseData);
+//            System.out.println(response);
+        } else {
+            System.out.println("Response data is null");
+        }
+    }
+});
+
+          NetworkManager.getInstance().addToQueueAndWait(req);
+         
+         
+         return com;
+     }
      
     
     
