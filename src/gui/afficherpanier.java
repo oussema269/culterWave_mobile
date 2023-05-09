@@ -55,7 +55,16 @@ import com.codename1.ui.ComboBox;
 import com.codename1.ui.Font;
 import com.codename1.ui.Slider;
 import com.codename1.ui.layouts.FlowLayout;
-
+import com.codename1.io.FileSystemStorage;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author rassa
@@ -128,6 +137,26 @@ public class afficherpanier extends BaseForm{
                    ArrayList<produit> prod=panier.getProducts();
                    float total=ServicePanier.getInstance().gettotal(41);                                                                                               
                     int count =ServicePanier.getInstance().getAllPanier(41).getCount();
+                    
+                    
+                    
+Button pdfButton = new Button("Export PDF");
+pdfButton.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        try {
+            generatePDF(prod);
+            Dialog.show("Succès", "Le fichier PDF a été créé avec succès.", "OK", null);
+        } catch (IOException ex) {
+            Dialog.show("Erreur", "Impossible de créer le fichier PDF.", "OK", null);
+        } catch (DocumentException ex) {
+            Logger.getLogger(afficherpanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+});
+
+// add the button to your user interface
+add(pdfButton);
 
                           
   Button commande = new Button("commander");
@@ -215,36 +244,12 @@ public class afficherpanier extends BaseForm{
 tot.getAllStyles().setFgColor(0x00FF00); // set the foreground color to green
 tot.getAllStyles().setAlignment(Component.BOTTOM | Component.RIGHT); // align the label to the bottom right
 add(tot);
-/*Label count1 = new Label("panier" + count);
+Label count1 = new Label("panier" + count);
 count1.getAllStyles().setFgColor(0x00FF00); // set the foreground color to green
 count1.getAllStyles().setAlignment(Component.BOTTOM | Component.LEFT); // align the label to the bottom right
 add(count1);
-*/
-// Create an icon for the cart
-FontImage cartIcon = FontImage.createMaterial(FontImage.MATERIAL_SHOPPING_CART, "Cart", 4.0f);
-
-// Create a label to display the cart count
-Label cartCountLabel = new Label(Integer.toString(count));
-cartCountLabel.getAllStyles().setFgColor(0xFFFFFF); // set the foreground color to white
-cartCountLabel.getAllStyles().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_MEDIUM)); // set the font style
-cartCountLabel.getAllStyles().setPadding(2, 2, 2, 2); // add some padding
-cartCountLabel.getAllStyles().setBgTransparency(255); // make the background fully opaque
-cartCountLabel.getAllStyles().setBgColor(0xFF0000); // set the background color to red
-cartCountLabel.getAllStyles().setAlignment(Component.CENTER); // center the text inside the label
-
-// Wrap the cart count label in a container to position it over the cart icon
-Container cartCountContainer = BorderLayout.center(cartCountLabel);
-cartCountContainer.setUIID("CartCount"); // give the container a custom UIID to style it separately
-
-// Add the cart icon and count container to a toolbar
-Toolbar myToolbar = new Toolbar();
 
 
-
-// Add the toolbar to the form
-Form myForm = new Form("My Form");
-myForm.setToolbar(myToolbar);
-myForm.show();
 
                   
     }
@@ -285,5 +290,48 @@ myForm.show();
 
         swipe.addTab("", page1);
     }
+    public static void generatePDF(List<produit> prod) throws IOException, DocumentException {
+        
+                panier panier = ServicePanier.getInstance().getAllPanier(41);
+                   
+        // create a new PDF document
+        Document document = new Document();
+
+        // create a file on the device's file system to write the PDF to
+String filePath = FileSystemStorage.getInstance().getAppHomePath() + "product_list.pdf";
+        OutputStream os = FileSystemStorage.getInstance().openOutputStream(filePath);
+
+          try {
+              // create a PDF writer to write the document to the output stream
+              PdfWriter.getInstance(document, os);
+          } catch (DocumentException ex) {
+              Logger.getLogger(afficherpanier.class.getName()).log(Level.SEVERE, null, ex);
+          }
+
+        // open the document
+        document.open();
+
+        // add a heading to the document
+        document.add(new Paragraph("Liste des produits"));
+          prod = panier.getProducts();
+                   float total=ServicePanier.getInstance().gettotal(41);                                                                                               
+                    int count =ServicePanier.getInstance().getAllPanier(41).getCount();
+        // add a table to the document with the product details
+        for (produit fi : prod) {
+            document.add(new Paragraph("Nom du produit : " + fi.getNom_produit()));
+            document.add(new Paragraph("Prix : " + fi.getPrix()));
+            // add other product details here
+            document.add(new Paragraph("\n"));
+        }
+                    document.add(new Paragraph("\n"));
+            document.add(new Paragraph("total"+total));
+
+        // close the document
+        document.close();
+
+        // close the output stream
+        os.close();
+    }
+    
     
 }
