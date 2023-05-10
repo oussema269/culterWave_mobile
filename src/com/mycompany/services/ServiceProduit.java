@@ -136,7 +136,7 @@ public class ServiceProduit {
      */
     public boolean deleteProduit(int id ) {
         String url = Statics.BASE_URL +"/deleteProduitMobile/"+id;
-        
+  
         req.setUrl(url);
         
         req.addResponseListener(new ActionListener<NetworkEvent>() {

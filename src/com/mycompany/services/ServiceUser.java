@@ -33,7 +33,7 @@ public class ServiceUser {
 
     public static boolean resultOk = true;
     String json;
-
+static user user2 =new user();
     //initilisation connection request 
     private ConnectionRequest req;
 
@@ -119,8 +119,8 @@ public class ServiceUser {
                         user1.setId(Double.valueOf((double) mapuser.get("id")).intValue());
                         user1.setType((String) mapuser.get("role"));
                         Storage.getInstance().writeObject("myObjectKey", user1);
-                        /*   user myObject = (user) Storage.getInstance().readObject("myObjectKey");
-                        System.out.println("test"+myObject);*/
+                        user myObject = (user) Storage.getInstance().readObject("myObjectKey");
+                        System.out.println("test"+myObject);
 
                         new ProfileForm(rs).show();
                     }
@@ -172,7 +172,7 @@ public class ServiceUser {
                         Storage.getInstance().writeObject("myObjectKey", user1);
                         /*   user myObject = (user) Storage.getInstance().readObject("myObjectKey");
                         System.out.println("test"+myObject);*/
-
+                            
                         new ProfileForm(rs).show();
                     }
 

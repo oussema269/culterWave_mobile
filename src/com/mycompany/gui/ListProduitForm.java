@@ -6,6 +6,7 @@ package com.mycompany.gui;
 import com.codename1.components.InfiniteProgress;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
+import com.codename1.io.Storage;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Component;
@@ -26,6 +27,8 @@ import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -35,7 +38,10 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.spinner.Picker;
 import com.codename1.ui.util.Resources;
 import com.mycomany.entities.produit;
+import com.mycomany.entities.user;
 import com.mycompany.services.ServiceProduit;
+import com.mycompany.services.ServiceUser;
+import com.mycompany.services.ServicePanier;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +49,8 @@ import java.util.ArrayList;
  * @author Lenovo
  */
 public class ListProduitForm extends BaseForm{
-    
+            user myObject = (user) Storage.getInstance().readObject("myObjectKey");
+
     Form current;
 
     /**
@@ -127,10 +134,13 @@ public class ListProduitForm extends BaseForm{
         ButtonGroup barGroup = new ButtonGroup();
        // RadioButton mesListes = RadioButton.createToggle("Mes produits", barGroup);
       //  mesListes.setUIID("SelectBar");
+      
         RadioButton liste = RadioButton.createToggle("Ajouter un produit", barGroup);
         liste.setUIID("SelectBar");
         RadioButton partage = RadioButton.createToggle("Mes produits", barGroup);
         partage.setUIID("SelectBar");
+        RadioButton panier = RadioButton.createToggle("panier", barGroup);
+        panier.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         //bouton ajouter produit 
         // Créer un bouton pour l'ajout de produit
@@ -140,7 +150,9 @@ public class ListProduitForm extends BaseForm{
 liste.addActionListener(e -> {
     new AjoutProduitForm(res).show();
 });
-
+panier.addActionListener(e -> {
+    new afficherpanier(res).show();
+});
 
 
 
@@ -155,7 +167,7 @@ liste.addActionListener(e -> {
         });*/
 
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(2, /*mesListes,*/ liste, partage),
+                GridLayout.encloseIn(3, /*mesListes,*/ liste, partage,panier),
                 FlowLayout.encloseBottom(arrow)
         ));
 
@@ -178,8 +190,7 @@ liste.addActionListener(e -> {
         ArrayList<produit>list = ServiceProduit.getInstance().affichageproduits();
         
         for(produit rec : list ) {
-             String urlImage ="back-logo.jpeg";//image statique pour le moment ba3d taw fi  videos jayin nwarikom image 
-            
+             String urlImage ="back-logo.jpeg";
              Image placeHolder = Image.createImage(120, 90);
              EncodedImage enc =  EncodedImage.createFromImage(placeHolder,false);
              URLImage urlim = URLImage.createToStorage(enc, urlImage, urlImage, URLImage.RESIZE_SCALE);
@@ -187,7 +198,24 @@ liste.addActionListener(e -> {
                 addButton(urlim,rec,res);
         
                 ScaleImageLabel image = new ScaleImageLabel(urlim);
+                Button acheter= new Button();
+                         acheter.addActionListener( new ActionListener() {
+                                            @Override
+            public void actionPerformed(ActionEvent evt) { 
                 
+                                                    }});  
+                         
+                            acheter.addActionListener(e -> {
+                                   ServicePanier s=new ServicePanier();
+                        
+                                s.addpanier(s.getAllPanier(ProfileForm.u),rec.getId());
+            
+        });
+
+                                 
+                           
+                            add(acheter);
+                        
                 Container containerImg = new Container();
                 
                 image.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);

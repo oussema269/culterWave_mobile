@@ -14,6 +14,12 @@ public class produit {
      private int id, stock, id_cat,id_owner;
     private float prix;
     private String lib;
+
+    public produit(int id, String lib,float prix) {
+        this.id = id;
+        this.prix = prix;
+        this.lib = lib;
+    }
    
     /**
      *

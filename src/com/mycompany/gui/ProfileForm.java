@@ -47,7 +47,7 @@ import java.util.Vector;
  * @author Shai Almog
  */
 public class ProfileForm extends BaseForm {
-
+ static int u;
     public ProfileForm(Resources res) {
         super("Newsfeed", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -90,7 +90,7 @@ public class ProfileForm extends BaseForm {
         TextField username = new TextField(myObject.getNom());
         username.setUIID("TextFieldBlack");
         addStringValue("Username", username);
-
+        u=myObject.getId();
         TextField filedprenom = new TextField(myObject.getPrenom());
         filedprenom.setUIID("TextFieldBlack");
         addStringValue("filedprenom", filedprenom);
