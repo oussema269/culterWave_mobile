@@ -86,6 +86,8 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
         tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
         tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_PAGES, e -> new ListProduitForm(res).show());
+        tb.addMaterialCommandToSideMenu("Formation", FontImage.MATERIAL_ADD_LINK, e -> new Listeformation(res).show());
+        tb.addMaterialCommandToSideMenu("evenenmt", FontImage.MATERIAL_BLOCK, e -> new Listevennement(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> {
     // Clear the storage
     Storage.getInstance().clearStorage();
