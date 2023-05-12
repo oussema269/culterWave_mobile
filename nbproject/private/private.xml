@@ -4,11 +4,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/azizt/OneDrive/Bureau/mobile/cc/src/com/mycompany/gui/BaseForm.java</file>
-            <file>file:/C:/Users/azizt/OneDrive/Bureau/mobile/cc/src/com/mycompany/gui/Listeformation.java</file>
-            <file>file:/C:/Users/azizt/OneDrive/Bureau/mobile/cc/src/com/mycompany/gui/Ajouterevennement.java</file>
-            <file>file:/C:/Users/azizt/OneDrive/Bureau/mobile/cc/src/com/mycompany/services/ServiceEvennement.java</file>
-            <file>file:/C:/Users/azizt/OneDrive/Bureau/mobile/cc/src/com/mycompany/gui/Listevennement.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/ListProduitForm.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/Areclamation.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/CleanModern.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycomany/utils/Statics.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/afficherpanier.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/AjoutProduitForm.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycomany/entities/Reclamation.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/BaseForm.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/pidevv/MyApplication.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/ReclamationDAO.java</file>
+            <file>file:/C:/xampp/htdocs/cc/src/com/mycompany/gui/AddReclamation.java</file>
         </group>
     </open-files>
 </project-private>

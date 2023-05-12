@@ -67,7 +67,7 @@ public class BaseForm extends Form {
         return separator;
     }
 
-    protected void addSideMenu(Resources res) {
+    public void addSideMenu(Resources res) {
         Toolbar tb = getToolbar();
         Image img = res.getImage("profile-background.jpg");
         if(img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
@@ -88,8 +88,9 @@ public class BaseForm extends Form {
         tb.addMaterialCommandToSideMenu("Produit", FontImage.MATERIAL_PAGES, e -> new ListProduitForm(res).show());
         tb.addMaterialCommandToSideMenu("Formation", FontImage.MATERIAL_ADD_LINK, e -> new Listeformation(res).show());
         tb.addMaterialCommandToSideMenu("evenenmt", FontImage.MATERIAL_BLOCK, e -> new Listevennement(res).show());
+        tb.addMaterialCommandToSideMenu("reclamation", FontImage.MATERIAL_60FPS, e -> new ReclamationDAO().findAllReclamation());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> {
-    // Clear the storage
+    // Clear the storageres
     Storage.getInstance().clearStorage();
     
     // Show the WalkthruForm

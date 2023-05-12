@@ -110,7 +110,7 @@ static user user2 =new user();
                         Dialog.show("Echec d'authentification", "Username ou mot de passe éronné", "OK", null);
                     }
 
-                    // new ListReclamationForm(rs).show();//yemchi lel list reclamation
+                    
                     {
                         user1.setNom((String) mapuser.get("nom"));
                         user1.setPrenom((String) mapuser.get("prenom"));
